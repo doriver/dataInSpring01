@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>데이터 어떻게 나오냐</h1>
+    <div th:each="sam: ${samList}">
+        <div th:text="${sam.writer}"></div>
+        <div th:text="${sam.title}"></div>
+        <textarea th:text="${sam.content}">
+
+        </textarea>
+    </div>
+
+</body>
+</html>

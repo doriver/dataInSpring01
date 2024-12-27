@@ -2,8 +2,10 @@ package com.example.data.controller;
 
 import com.example.data.entity.AAa;
 import com.example.data.entity.Sample01;
+import com.example.data.entity.Sample02;
 import com.example.data.repository.AaRepository;
 import com.example.data.repository.Sample01Repository;
+import com.example.data.repository.Sample02Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,10 +20,17 @@ public class HelloController {
 
     @Autowired private AaRepository aaRepository;
     @Autowired private Sample01Repository sample01Repository;
+    @Autowired private Sample02Repository sample02Repository;
 
     @RequestMapping("/rsaved")
     public List<Sample01> spr() {
         List<Sample01> sam = sample01Repository.findAll();
+        return sam;
+    }
+
+    @RequestMapping("/rsaved22")
+    public List<Sample02> sp22r() {
+        List<Sample02> sam = sample02Repository.findAll();
         return sam;
     }
 

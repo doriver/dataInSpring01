@@ -16,7 +16,7 @@ public class Csv01Controller {
 
     @RequestMapping("/ci")
     String ci() {
-        String csvPath = "classpath:static/data/okkySample01.csv";
+        String csvPath = "classpath:static/data/okkySample02.csv";
         csvFileInsertService.csvFileToMySQL(csvPath);
         return "성공";
     }
