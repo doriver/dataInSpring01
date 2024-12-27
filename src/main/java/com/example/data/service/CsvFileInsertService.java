@@ -1,5 +1,7 @@
 package com.example.data.service;
 
+import com.example.data.entity.Sample01;
+import com.example.data.repository.Sample01Repository;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -17,32 +19,39 @@ public class CsvFileInsertService {
     @Autowired
     private ResourceLoader resourceLoader;
 
-    public void csvFileToMySQL() {
+    @Autowired private Sample01Repository sample01Repository;
+
+    public void csvFileToMySQL(String csvPath) {
         try {
-            Resource resource = resourceLoader.getResource("classpath:static/data/okkySample01.csv");
+            Resource resource = resourceLoader.getResource(csvPath);
 
             try (
                     Reader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
                     CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader()) ) {
                 int count = 0;
                 for (CSVRecord record: csvParser) {
+
+                    String writer = record.get("writer");
                     String title = record.get("title");
-                    String author = record.get("author");
-                    String company = record.get("company");
-                    String _price = record.get("price");
-                    int price = Integer.parseInt(_price);
-                    String imageUrl = record.get("imageUrl");
-                    String summary = record.get("summary");
 
-//                    Book book = Book.builder()
-//                            .title(title).author(author).company(company).price(price)
-//                            .imageUrl(imageUrl).summary(summary)
-//                            .build();
-//                    bookService.insertBook(book);
+                    String _views = record.get("views");
+                    int views = Integer.parseInt(_views);
+                    String _likes = record.get("likes");
+                    int likes = Integer.parseInt(_likes);
+                    String _comments = record.get("comments");
+                    int comments = Integer.parseInt(_comments);
 
-                    if (count ++ == 100) {
-                        break;
-                    }
+                    String content = record.get("content");
+
+                    Sample01 smp = new Sample01();
+                    smp.setWriter(writer);
+                    smp.setTitle(title);
+                    smp.setViews(views);
+                    smp.setLikes(likes);
+                    smp.setComments(comments);
+                    smp.setContent(content);
+
+                    sample01Repository.save(smp);
                 }
             }
 

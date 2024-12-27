@@ -1,24 +1,36 @@
 package com.example.data.controller;
 
 import com.example.data.entity.AAa;
+import com.example.data.entity.Sample01;
 import com.example.data.repository.AaRepository;
+import com.example.data.repository.Sample01Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
 public class HelloController {
 
     @Autowired private AaRepository aaRepository;
+    @Autowired private Sample01Repository sample01Repository;
+
+    @RequestMapping("/rsaved")
+    public List<Sample01> spr() {
+        List<Sample01> sam = sample01Repository.findAll();
+        return sam;
+    }
 
     @RequestMapping("/c")
     public String cc() {
         AAa a = new AAa();
-        a.setINt(4);
-        a.setSTr("sttrr");
+        a.setINt(9);
+        a.setSTr("aannxx");
+        a.setLdt(LocalDateTime.now());
         aaRepository.save(a);
         return "성공?";
     }
