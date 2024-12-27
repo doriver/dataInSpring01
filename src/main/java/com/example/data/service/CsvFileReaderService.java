@@ -55,39 +55,4 @@ public class CsvFileReaderService {
             e.printStackTrace();
         }
     }
-
-
-    public void csvFileToH2() {
-        try {
-            Resource resource = resourceLoader.getResource("classpath:static/data/20241114_yes24_국내도서_새로나온_상품.csv");
-
-            try (
-                    Reader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
-                    CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader()) ) {
-                int count = 0;
-                for (CSVRecord record: csvParser) {
-                    String title = record.get("title");
-                    String author = record.get("author");
-                    String company = record.get("company");
-                    String _price = record.get("price");
-                    int price = Integer.parseInt(_price);
-                    String imageUrl = record.get("imageUrl");
-                    String summary = record.get("summary");
-//                    Book book = Book.builder()
-//                            .title(title).author(author).company(company).price(price)
-//                            .imageUrl(imageUrl).summary(summary)
-//                            .build();
-//                    bookService.insertBook(book);
-
-                    if (count ++ == 100) {
-                        break;
-                    }
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 }
