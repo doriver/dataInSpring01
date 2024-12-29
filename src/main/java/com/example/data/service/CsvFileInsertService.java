@@ -2,10 +2,8 @@ package com.example.data.service;
 
 import com.example.data.entity.CrwlPost;
 import com.example.data.entity.Sample01;
-import com.example.data.entity.Sample02;
 import com.example.data.repository.CrwlPostRepository;
 import com.example.data.repository.Sample01Repository;
-import com.example.data.repository.Sample02Repository;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -26,7 +24,7 @@ public class CsvFileInsertService {
     private ResourceLoader resourceLoader;
 
     @Autowired private Sample01Repository sample01Repository;
-    @Autowired private Sample02Repository sample02Repository;
+
     @Autowired private CrwlPostRepository crwlPostRepository;
 
     @Transactional
@@ -94,7 +92,7 @@ public class CsvFileInsertService {
 
                     String content = record.get("content");
 
-                    Sample02 smp = new Sample02();
+                    Sample01 smp = new Sample01();
                     smp.setWriter(writer);
                     smp.setTitle(title);
                     smp.setViews(views);
@@ -102,7 +100,7 @@ public class CsvFileInsertService {
                     smp.setComments(comments);
                     smp.setContent(content);
 
-                    sample02Repository.save(smp);
+                    sample01Repository.save(smp);
                 }
             }
 
