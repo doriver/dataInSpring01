@@ -23,7 +23,7 @@ public class HelloController {
         List<Sample01> sam = sample01Repository.findAll();
         return sam;
     }
-    
+
 
     @RequestMapping("/c")
     public String cc() {

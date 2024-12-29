@@ -59,6 +59,9 @@ public class CsvFileInsertService {
                             .content(content).viewCount(views).likeCount(likes)
                             .createdAt(createAt)
                             .build();
+                    
+                    
+//                    cp.addreply(); // 반복문 돌리면서 다 넣어줘야해
 
                     crwlPostRepository.save(cp);
                 }

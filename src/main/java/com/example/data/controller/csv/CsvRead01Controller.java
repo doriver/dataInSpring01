@@ -11,6 +11,14 @@ public class CsvRead01Controller {
     @Autowired
     CsvFileReaderService csvFileReaderService;
 
+    @RequestMapping("/cr/json")
+    String aa12() {
+        String csvPath = "classpath:static/data/okkyRookie03.csv";
+
+        csvFileReaderService.csvFileReader12(csvPath);
+        return "성공?";
+    }
+
     @RequestMapping("/cr")
     String aa() {
         String csvPath = "classpath:static/data/okkyThree.csv";

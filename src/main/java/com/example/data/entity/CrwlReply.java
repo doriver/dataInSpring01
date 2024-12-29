@@ -16,9 +16,12 @@ import java.time.LocalDateTime;
 public class CrwlReply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long rid;
 
-    private long postId;
+    @ManyToOne
+    @JoinColumn(name = "pid")
+    private CrwlPost crwlPost;
+
     private String userNickname;
 
     @Column(length = 1000)
