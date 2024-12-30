@@ -27,8 +27,11 @@ public class CrwlPost {
     private String userNickname;
     private String title;
 
-    @Column(length = 8000)
+    @Column(length = 2000)
     private String content;
+
+    private String imageSrc;
+
     private int viewCount;
     private int likeCount;
 
