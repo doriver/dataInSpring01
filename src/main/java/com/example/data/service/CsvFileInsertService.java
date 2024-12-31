@@ -60,7 +60,7 @@ public class CsvFileInsertService {
                     LocalDateTime createAt = LDT.minusDays(Integer.parseInt(dayAgo));
 
                     CrwlPost cp = CrwlPost.builder()
-                            .category(category).userNickname(user).title(title)
+                            .userNickname(user).title(title)
                             .content(content).viewCount(views).likeCount(likes)
                             .createdAt(createAt)
                             .build();
