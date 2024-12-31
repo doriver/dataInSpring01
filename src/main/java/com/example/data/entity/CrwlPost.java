@@ -16,14 +16,14 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder  
+@Builder
 public class CrwlPost {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long pid;
 
-    private String category;
+//    private String category; 진짜 db에 넣을때만 해주면 될듯, desc필드로 대체
     private String userNickname;
     private String title;
 
@@ -43,6 +43,8 @@ public class CrwlPost {
 
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false)
     private LocalDateTime updatedAt; // insertable = false 안해주면 db에 null로 들어감, 아마 jpa가 필드 값을 명시적으로 설정하지 않으면 null로 처리해서 그런듯
+
+    private int desc;
 
     // 연관관계 메소드 추가
     public void addreply(CrwlReply crwlReply) {
