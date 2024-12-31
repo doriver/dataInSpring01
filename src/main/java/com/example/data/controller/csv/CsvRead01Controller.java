@@ -13,7 +13,7 @@ public class CsvRead01Controller {
 
     @RequestMapping("/cr/json")
     String aa12() {
-        String csvPath = "classpath:static/data/okkyRookie03.csv";
+        String csvPath = "classpath:static/crwl/okkyReal/okkyLifeStoryLastPage.csv";
 
         csvFileReaderService.csvFileReader12(csvPath);
         return "성공?";

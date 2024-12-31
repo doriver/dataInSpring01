@@ -19,11 +19,15 @@ public class strCasting01 {
         LocalDateTime dateTimeValue = LocalDateTime.parse(strDateTime, formatter);
         System.out.println(dateTimeValue);
 
-        enum Day { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY }
+
         String strDay = "MONDAY";
         Day dayValue = Day.valueOf(strDay);
         System.out.println(dayValue);
 
+        LocalDateTime dateTime = LocalDateTime.of(2000, 1, 10, 0, 0);
+        System.out.println(dateTime);
     }
+
+    enum Day { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY }
 
 }

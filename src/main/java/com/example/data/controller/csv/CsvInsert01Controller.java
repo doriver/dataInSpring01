@@ -14,7 +14,7 @@ public class CsvInsert01Controller {
 
     @RequestMapping("/cp")
     String cicp() {
-        String csvPath = "classpath:static/data/okkyRookie03.csv";
+        String csvPath = "classpath:static/crwl/okkyReal/okkyLifeStoryLastPage.csv";
         csvFileInsertService.csvToCpToMySQL(csvPath);
         return "cp성공";
     }
