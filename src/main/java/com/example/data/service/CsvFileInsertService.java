@@ -22,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Service
 public class CsvFileInsertService {
@@ -48,6 +49,10 @@ public class CsvFileInsertService {
 
                     String user = record.get("writer");
                     String title = record.get("title");
+                    LocalDateTime postCreatedAt = LocalDateTime.parse(record.get("createdAt"));
+//                    LocalDateTime dateTime = LocalDateTime.of(2000, 1, 10, 0, 0 + count*3);
+//                    LocalDateTime LDT = LocalDateTime.now();
+//                    LocalDateTime createAt = LDT.minusDays(Integer.parseInt(dayAgo));
                     String content = record.get("content");
 
                     String imgSrc = record.get("imgSrc");
@@ -58,24 +63,25 @@ public class CsvFileInsertService {
                     String _likes = record.get("likeCount");
                     int likes = Integer.parseInt(_likes);
 
-                    LocalDateTime dateTime = LocalDateTime.of(2000, 1, 10, 0, 0 + count*3);
-//                    LocalDateTime LDT = LocalDateTime.now();
-//                    LocalDateTime createAt = LDT.minusDays(Integer.parseInt(dayAgo));
 
                     CrwlPost cp = CrwlPost.builder().descOrg(desc)
-                            .userNickname(user).title(title)
+                            .userNickname(user).title(title).createdAt(postCreatedAt)
                             .content(content).imageSrc(imgSrc).viewCount(views).likeCount(likes)
-                            .createdAt(dateTime)
                             .build();
 
                     String jsonStr = record.get("postReplyLists");
                     ObjectMapper objectMapper = new ObjectMapper(); // jackson databind
+                    Random rd = new Random();
                     try {
                         List<Map<String,Object>> postReplyLists = objectMapper.readValue(jsonStr, new TypeReference<List<Map<String,Object>>>() {});
+                        LocalDateTime replyCreatedAt = postCreatedAt;
                         for (Map<String,Object> postReply :postReplyLists) {
+                            // 댓글 생성 시간 임의로 정하는거
+                            replyCreatedAt = replyCreatedAt.plusHours(rd.nextInt(7)).plusMinutes(rd.nextInt(60));
+
                             CrwlReply crwlReply = CrwlReply.builder()
                                     .userNickname((String)postReply.get("replyWriter")).content((String)postReply.get("replyText"))
-                                    .createdAt(dateTime.plusMinutes(2L))
+                                    .createdAt(replyCreatedAt)
                                     .build();
                             cp.addreply(crwlReply);
 

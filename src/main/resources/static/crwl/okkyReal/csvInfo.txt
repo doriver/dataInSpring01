@@ -1,0 +1,2 @@
+okkyLifeStoryLastPage : 마지막 페이지쪽 글들 15개인가?
+okkyLifeStoryFirstPage200 : 24-12-30T12:14 이전 200개 해서 24-12-19T22:23 까지
