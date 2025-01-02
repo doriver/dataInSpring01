@@ -10,13 +10,13 @@
         <h3>게시글 [[${cpStat.count}]]</h3>
         <div th:text="${cp.userNickname}"></div>
         <div th:text="${cp.title}"></div>
-        <textarea th:width="700" th:height="400" th:text="${cp.content}">
+        <textarea cols="100" rows="10" th:text="${cp.content}">
 
         </textarea>
         <h5>댓글</h5>
         <div th:each="reply :${cp.replys}">
             <div th:text="${reply.userNickname}"></div>
-            <textarea width="400" height="200" th:text="${reply.content}"></textarea>
+            <textarea cols="60" rows="5" th:text="${reply.content}"></textarea>
         </div>
 
     </div>
