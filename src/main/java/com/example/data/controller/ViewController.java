@@ -17,7 +17,7 @@ public class ViewController {
 
     @RequestMapping("/hh")
     public String aa(Model model) {
-        List<CrwlPost> cpList = crwlPostRepository.findAll();
+        List<CrwlPost> cpList = crwlPostRepository.findAll(); // 댓글까지 싹가져옴, 그냥 글만 가져오게도 할수 있겠지?
         model.addAttribute("cpList", cpList);
         return "hhh";
     }

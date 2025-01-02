@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class CsvInsert01Controller {
 
     @Autowired
-    CsvFileInsertService csvFileInsertService;
+    private CsvFileInsertService csvFileInsertService;
 
     @RequestMapping("/cp")
     String cicp() {
-        String csvPath = "classpath:static/crwl/okkyReal/okkyLifeStoryFirstPageUp.csv";
+        String csvPath = "classpath:static/crwl/okkyReal/okkyLifeStoryFirstPage200.csv";
         csvFileInsertService.csvToCpToMySQL(csvPath);
         return "cp성공";
     }
