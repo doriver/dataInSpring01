@@ -33,13 +33,19 @@ public class CsvFileInsertService {
     public void csvToCpToMySQL(String csvPath) {
         try {
             Resource resource = resourceLoader.getResource(csvPath);
-
             Reader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
+            // csv파일을 파징함
             CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader());
-
+            int count = 1;
             for (CSVRecord record: csvParser) {
                 try {
+                    // csv에서 각 row마다 @Transactional걸어서 insert함
                     saveTransactionCsvToCpToMySQL(record);
+
+                    if (count % 100 == 0) {
+                        System.out.println(count);
+                    }
+                    count = count + 1;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -77,6 +83,7 @@ public class CsvFileInsertService {
         ObjectMapper objectMapper = new ObjectMapper(); // jackson databind
         Random rd = new Random();
         try {
+                                                        // json문자열을 java타입으로 파징
             List<Map<String,Object>> postReplyLists = objectMapper.readValue(jsonStr, new TypeReference<List<Map<String,Object>>>() {});
             LocalDateTime replyCreatedAt = postCreatedAt;
             for (Map<String,Object> postReply :postReplyLists) {
