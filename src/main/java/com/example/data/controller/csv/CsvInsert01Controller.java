@@ -19,10 +19,10 @@ public class CsvInsert01Controller {
         return "cp성공";
     }
 
-    @RequestMapping("/sp")
+    @RequestMapping("/last")
     String cisp() {
-        String csvPath = "classpath:static/data/okkySample02.csv";
-        csvFileInsertService.csvFileToMySQL(csvPath);
+        String csvPath = "classpath:static/crwl/okkyReal/okkyLifeStoryLastPage.csv";
+        csvFileInsertService.okkyLastPageToMySQL(csvPath);
         return "성공";
     }
 }

@@ -6,12 +6,19 @@
 </head>
 <body>
     <h1>데이터 어떻게 나오냐</h1>
-    <div th:each="sam: ${samList}">
-        <div th:text="${sam.writer}"></div>
-        <div th:text="${sam.title}"></div>
-        <textarea th:text="${sam.content}">
+    <div th:each="cp, cpStat : ${cpList}">
+        <h3>게시글 [[${cpStat.count}]]</h3>
+        <div th:text="${cp.userNickname}"></div>
+        <div th:text="${cp.title}"></div>
+        <textarea th:width="700" th:height="400" th:text="${cp.content}">
 
         </textarea>
+        <h5>댓글</h5>
+        <div th:each="reply :${cp.replys}">
+            <div th:text="${reply.userNickname}"></div>
+            <textarea width="400" height="200" th:text="${reply.content}"></textarea>
+        </div>
+
     </div>
 
 </body>
