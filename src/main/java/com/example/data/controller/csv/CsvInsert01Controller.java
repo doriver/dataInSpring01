@@ -1,6 +1,6 @@
 package com.example.data.controller.csv;
 
-import com.example.data.service.CsvFileInsertService;
+import com.example.data.service.csv.CsvFileInsertService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

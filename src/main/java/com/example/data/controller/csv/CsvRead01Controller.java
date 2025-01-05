@@ -1,6 +1,6 @@
 package com.example.data.controller.csv;
 
-import com.example.data.service.CsvFileReaderService;
+import com.example.data.service.csv.CsvFileReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,19 +11,14 @@ public class CsvRead01Controller {
     @Autowired
     CsvFileReaderService csvFileReaderService;
 
-    @RequestMapping("/cr/json")
-    String aa12() {
-        String csvPath = "classpath:static/crwl/okkyReal/okkyLifeStoryLastPage.csv";
-
-        csvFileReaderService.csvFileReader12(csvPath);
-        return "성공?";
-    }
-
     @RequestMapping("/cr")
     String aa() {
-        String csvPath = "classpath:static/data/okkyThree.csv";
+        String csvPath = "classpath:static/crwl/okkyReal/okkyLifeStoryFirstPage200.csv";
 
         csvFileReaderService.csvFileReader(csvPath);
         return "성공?";
     }
+
+
+
 }
