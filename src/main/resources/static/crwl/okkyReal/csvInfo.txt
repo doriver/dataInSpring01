@@ -1,6 +1,0 @@
-okkyLifeStoryLastPage : 마지막 페이지쪽 글들 15개인가?
-okkyLifeStoryFirstPage200 : 24-12-30T12:14 이전 200개 해서 24-12-19T22:23 까지
-okkyLifeStoryFirstPageUp500 : 24-12-19T22:08 이전 500개 해서 24-11-29T10:30 까지
-okkyLifeStoryFirstPageUp487(700) : 24-11-29T10:29 이전 464개 해서 24-11-14T19:53 까지 ( url수집단계에서 700개 하려했는데 실패함 )
-okkyLifeStoryFirstPageUp5002 : 24-11-14T18:28 이전 467개 해서 24-10-29T13:44 까지
-총 : 1638건
