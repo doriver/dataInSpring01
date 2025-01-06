@@ -12,14 +12,22 @@ public class CsvInsert01Controller {
     @Autowired
     private CsvFileInsertService csvFileInsertService;
 
-    @RequestMapping("/cp")
+    @RequestMapping("/es/p")
+    String ci123cp() {
+        String csvPath = "classpath:static/crwl/okkyReal/okkyLifeStoryFirstPage200.csv";
+        csvFileInsertService.csvFileToElasticsearch(csvPath);
+        return "es성공";
+    }
+
+
+    @RequestMapping("/ms/cp")
     String cicp() {
         String csvPath = "classpath:static/crwl/okkyReal/okkyLifeStoryFirstPageUp5002.csv";
         csvFileInsertService.csvToCpToMySQL(csvPath);
         return "cp성공";
     }
 
-    @RequestMapping("/last")
+    @RequestMapping("/ms/last")
     String cisp() {
         String csvPath = "classpath:static/crwl/okkyReal/okkyLifeStoryLastPage.csv";
         csvFileInsertService.okkyLastPageToMySQL(csvPath);

@@ -2,7 +2,10 @@ package com.example.data.service.csv;
 
 import com.example.data.entity.CrwlPost;
 import com.example.data.entity.CrwlReply;
+
+import com.example.data.entity.es.PostEs;
 import com.example.data.repository.CrwlPostRepository;
+import com.example.data.repository.PostEsRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.csv.CSVFormat;
@@ -28,6 +31,45 @@ public class CsvFileInsertService {
     private ResourceLoader resourceLoader;
 
     @Autowired private CrwlPostRepository crwlPostRepository;
+    @Autowired private PostEsRepository postEsRepository;
+
+    public void csvFileToElasticsearch(String csvPath) {
+        try {
+            Resource resource = resourceLoader.getResource(csvPath);
+            Reader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
+            CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader());
+
+            List<CSVRecord> csvRowList = csvParser.getRecords();
+            int csvRowSize = csvRowList.size(); // csv row개수 맞음
+
+            for (int i = 0; i < 3; i++) {
+                CSVRecord record = csvRowList.get(i);
+
+                String writer = record.get("writer");
+                String title = record.get("title");
+                String content = record.get("content");
+
+                String _view = record.get("viewCount");
+                int viewCount = Integer.parseInt(_view);
+                String _like = record.get("likeCount");
+                int likeCount = Integer.parseInt(_like);
+
+                LocalDateTime createdAt = LocalDateTime.parse(record.get("createdAt"));
+
+                PostEs postEs = PostEs.builder()
+                        .nickname(writer).title(title).content(content)
+                        .viewCount(viewCount).likeCount(likeCount).createAt(createdAt)
+                        .build();
+
+                postEsRepository.save(postEs);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
 
     public void csvToCpToMySQL(String csvPath) {
@@ -166,39 +208,4 @@ public class CsvFileInsertService {
         }
     }
 
-
-
-
-
-
-
-    public void csvFileToMySQL(String csvPath) {
-        try {
-            Resource resource = resourceLoader.getResource(csvPath);
-
-            try (
-                    Reader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
-                    CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader()) ) {
-                int count = 0;
-                for (CSVRecord record: csvParser) {
-
-                    String writer = record.get("writer");
-                    String title = record.get("title");
-
-                    String _views = record.get("views");
-                    int views = Integer.parseInt(_views);
-                    String _likes = record.get("likes");
-                    int likes = Integer.parseInt(_likes);
-                    String _comments = record.get("comments");
-                    int comments = Integer.parseInt(_comments);
-
-                    String content = record.get("content");
-
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
