@@ -13,12 +13,9 @@ public class CsvRead01Controller {
 
     @RequestMapping("/cr")
     String aa() {
-        String csvPath = "classpath:static/crwl/okkyReal/okkyLifeStoryFirstPage200.csv";
-
+        String csvPath = "classpath:static/crwl/okkyReal/okkyLifeStoryFirstPageUp500Es4.csv";
         csvFileReaderService.csvFileReader(csvPath);
         return "성공?";
     }
-
-
 
 }
