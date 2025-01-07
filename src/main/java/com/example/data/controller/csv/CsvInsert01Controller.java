@@ -14,7 +14,7 @@ public class CsvInsert01Controller {
 
     @RequestMapping("/es/p")
     String ci123cp() {
-        String csvPath = "classpath:static/crwl/okkyReal/okkyLifeStoryFirstPage200.csv";
+        String csvPath = "classpath:static/crwl/okkyReal/okkyLifeStoryFirstPageUp487(700).csv";
         csvFileInsertService.csvFileToElasticsearch(csvPath);
         return "es성공";
     }

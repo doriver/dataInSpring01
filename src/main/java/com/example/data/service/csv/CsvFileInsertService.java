@@ -45,54 +45,65 @@ public class CsvFileInsertService {
             List<CSVRecord> csvRowList = csvParser.getRecords();
             int csvRowSize = csvRowList.size(); // csv row개수 맞음
 
-            for (int i = 0; i < 3; i++) {
-                CSVRecord record = csvRowList.get(i);
-
-                String writer = record.get("writer");
-                String title = record.get("title");
-                String content = record.get("content");
-
-                String _view = record.get("viewCount");
-                int viewCount = Integer.parseInt(_view);
-                String _like = record.get("likeCount");
-                int likeCount = Integer.parseInt(_like);
-
-                LocalDateTime createdAt = LocalDateTime.parse(record.get("createdAt"));
-
-                String jsonStr = record.get("postReplyLists");
-                ObjectMapper objectMapper = new ObjectMapper(); // jackson databind
-                Random rd = new Random();
-
-                List<ReplyEs> replies = new ArrayList<>();
-
+            for (int i = 0; i < csvRowSize; i++) {
                 try {
-                    // json문자열을 java타입으로 파징
-                    List<Map<String,Object>> postReplyLists = objectMapper.readValue(jsonStr, new TypeReference<List<Map<String,Object>>>() {});
-                    LocalDateTime replyCreatedAt = createdAt;
-                    for (Map<String,Object> postReply :postReplyLists) {
-                        // 댓글 생성 시간 임의로 정하는거
-                        replyCreatedAt = replyCreatedAt.plusHours(rd.nextInt(7)).plusMinutes(rd.nextInt(60));
+                    CSVRecord record = csvRowList.get(i);
 
-                        ReplyEs crwlReply = ReplyEs.builder()
-                                .nickname((String)postReply.get("replyWriter"))
-                                .content((String)postReply.get("replyText"))
-                                .createdAt(replyCreatedAt)
-                                .build();
+                    String writer = record.get("writer");
+                    String title = record.get("title");
+                    String content = record.get("content");
 
-                        replies.add(crwlReply);
+                    String _view = record.get("viewCount");
+                    int viewCount = Integer.parseInt(_view);
+                    String _like = record.get("likeCount");
+                    int likeCount = Integer.parseInt(_like);
+
+                    LocalDateTime createdAt = LocalDateTime.parse(record.get("createdAt"));
+
+                    String jsonStr = record.get("postReplyLists");
+                    ObjectMapper objectMapper = new ObjectMapper(); // jackson databind
+                    Random rd = new Random();
+
+                    List<ReplyEs> replies = new ArrayList<>();
+
+                    try {
+                        // json문자열을 java타입으로 파징
+                        List<Map<String,Object>> postReplyLists = objectMapper.readValue(jsonStr, new TypeReference<List<Map<String,Object>>>() {});
+                        LocalDateTime replyCreatedAt = createdAt;
+                        for (Map<String,Object> postReply :postReplyLists) {
+                            // 댓글 생성 시간 임의로 정하는거
+                            replyCreatedAt = replyCreatedAt.plusHours(rd.nextInt(7)).plusMinutes(rd.nextInt(60));
+
+                            ReplyEs crwlReply = ReplyEs.builder()
+                                    .nickname((String)postReply.get("replyWriter"))
+                                    .content((String)postReply.get("replyText"))
+                                    .createdAt(replyCreatedAt)
+                                    .build();
+
+                            replies.add(crwlReply);
+                        }
+                    // 댓글 관련 try문
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+
+                    PostEs postEs = PostEs.builder()
+                            .nickname(writer).title(title).content(content).category(Category.GENERAL)
+                            .viewCount(viewCount).likeCount(likeCount).replies(replies).createdAt(createdAt)
+                            .build();
+                    postEsRepository.save(postEs);
+                // for문에 있는 try문
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
+                if (i % 100 == 0) {
+                    System.out.println("  =====   =====   " + i + "  =====   =====   ");
+                }
 
-                PostEs postEs = PostEs.builder()
-                        .nickname(writer).title(title).content(content).category(Category.GENERAL)
-                        .viewCount(viewCount).likeCount(likeCount).replies(replies).createdAt(createdAt)
-                        .build();
 
-                postEsRepository.save(postEs);
-            }
+            } // for문 끝
+        // 매서드 처음 try문
         } catch (Exception e) {
             e.printStackTrace();
         }
