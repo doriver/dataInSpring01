@@ -5,7 +5,6 @@ import com.example.data.entity.CrwlReply;
 
 import com.example.data.entity.es.PostEs;
 import com.example.data.repository.CrwlPostRepository;
-import com.example.data.repository.PostEsRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.csv.CSVFormat;
