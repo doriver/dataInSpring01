@@ -16,7 +16,7 @@ public class CsvRead01Controller {
 
     @RequestMapping("/cr/dto")
     List<CrwlDTO> aa123() {
-        String csvPath = "classpath:static/crwl/okkyReal/okkyLifeStoryFirstPageUp500Es5.csv";
+        String csvPath = "classpath:static/crwl/okkyReal/okkyLifeStoryFirstPageUp500Es6.csv";
         List<CrwlDTO> viewData = csvFileReaderService.csvToDto(csvPath);
 
         return viewData;
