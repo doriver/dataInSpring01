@@ -3,8 +3,11 @@ package com.example.data.service.csv;
 import com.example.data.entity.CrwlPost;
 import com.example.data.entity.CrwlReply;
 
+import com.example.data.entity.es.Category;
 import com.example.data.entity.es.PostEs;
+import com.example.data.entity.es.ReplyEs;
 import com.example.data.repository.CrwlPostRepository;
+import com.example.data.repository.PostEsRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.csv.CSVFormat;
@@ -20,6 +23,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -55,9 +59,36 @@ public class CsvFileInsertService {
 
                 LocalDateTime createdAt = LocalDateTime.parse(record.get("createdAt"));
 
+                String jsonStr = record.get("postReplyLists");
+                ObjectMapper objectMapper = new ObjectMapper(); // jackson databind
+                Random rd = new Random();
+
+                List<ReplyEs> replies = new ArrayList<>();
+
+                try {
+                    // json문자열을 java타입으로 파징
+                    List<Map<String,Object>> postReplyLists = objectMapper.readValue(jsonStr, new TypeReference<List<Map<String,Object>>>() {});
+                    LocalDateTime replyCreatedAt = createdAt;
+                    for (Map<String,Object> postReply :postReplyLists) {
+                        // 댓글 생성 시간 임의로 정하는거
+                        replyCreatedAt = replyCreatedAt.plusHours(rd.nextInt(7)).plusMinutes(rd.nextInt(60));
+
+                        ReplyEs crwlReply = ReplyEs.builder()
+                                .nickname((String)postReply.get("replyWriter"))
+                                .content((String)postReply.get("replyText"))
+                                .createdAt(replyCreatedAt)
+                                .build();
+
+                        replies.add(crwlReply);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
                 PostEs postEs = PostEs.builder()
-                        .nickname(writer).title(title).content(content)
-                        .viewCount(viewCount).likeCount(likeCount).createAt(createdAt)
+                        .nickname(writer).title(title).content(content).category(Category.GENERAL)
+                        .viewCount(viewCount).likeCount(likeCount).replies(replies).createdAt(createdAt)
                         .build();
 
                 postEsRepository.save(postEs);
