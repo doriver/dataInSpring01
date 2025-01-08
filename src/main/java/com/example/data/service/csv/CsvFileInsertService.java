@@ -87,9 +87,11 @@ public class CsvFileInsertService {
                         e.printStackTrace();
                     }
 
+                    int replyCount = replies.size();
+
                     PostEs postEs = PostEs.builder()
                             .nickname(writer).title(title).content(content).category(Category.GENERAL)
-                            .viewCount(viewCount).likeCount(likeCount).replies(replies).createdAt(createdAt)
+                            .viewCount(viewCount).likeCount(likeCount).replyCount(replyCount).replies(replies).createdAt(createdAt)
                             .build();
                     postEsRepository.save(postEs);
                 // for문에 있는 try문

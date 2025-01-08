@@ -48,6 +48,9 @@ public class PostEs {
     @Field(type = FieldType.Nested)
     private List<ReplyEs> replies;
 
+    @Field(type = FieldType.Integer)
+    private int replyCount;
+
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @Field(type = FieldType.Date, format = {}, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
