@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>데이터 어떻게 나오냐</h1>
+
+    <div th:each="pes, cpStat : ${pesList}">
+        <h3>게시글 [[${cpStat.count}]]</h3>
+        <div th:text="${pes.nickname}"></div>
+        <div th:text="${pes.title}"></div>
+        <div th:text="${pes.createdAt}"></div>
+    </div>
+
+</body>
+</html>
