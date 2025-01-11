@@ -98,21 +98,15 @@ public class CsvFileInsertService {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
                 if (i % 100 == 0) {
                     System.out.println("  =====   =====   " + i + "  =====   =====   ");
                 }
-
-
             } // for문 끝
         // 매서드 처음 try문
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-
-
 
 
     public void csvToCpToMySQL(String csvPath) {
@@ -186,69 +180,6 @@ public class CsvFileInsertService {
         }
 
         crwlPostRepository.save(cp);
-    }
-
-    // 마지막 페이지 넣었던거
-    @Transactional
-    public void okkyLastPageToMySQL(String csvPath) {
-        try {
-            Resource resource = resourceLoader.getResource(csvPath);
-
-            try (
-                    Reader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
-                    CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader()) ) {
-                int count = 0;
-                for (CSVRecord record: csvParser) {
-
-                    String _desc = record.get("desc");
-                    int desc = Integer.parseInt(_desc);
-
-                    String user = record.get("writer");
-                    String title = record.get("title");
-                    String content = record.get("content");
-
-                    String imgSrc = record.get("imgSrc");
-
-                    String _views = record.get("viewCount");
-                    int views = Integer.parseInt(_views);
-
-                    String _likes = record.get("likeCount");
-                    int likes = Integer.parseInt(_likes);
-
-                    LocalDateTime dateTime = LocalDateTime.of(2000, 1, 10, 0, 0 + count*3);
-
-                    CrwlPost cp = CrwlPost.builder().descOrg(desc)
-                            .userNickname(user).title(title)
-                            .content(content).imageSrc(imgSrc).viewCount(views).likeCount(likes)
-                            .createdAt(dateTime)
-                            .build();
-
-                    String jsonStr = record.get("postReplyLists");
-                    ObjectMapper objectMapper = new ObjectMapper(); // jackson databind
-                    try {
-                        List<Map<String,Object>> postReplyLists = objectMapper.readValue(jsonStr, new TypeReference<List<Map<String,Object>>>() {});
-                        for (Map<String,Object> postReply :postReplyLists) {
-                            CrwlReply crwlReply = CrwlReply.builder()
-                                    .userNickname((String)postReply.get("replyWriter")).content((String)postReply.get("replyText"))
-                                    .createdAt(dateTime.plusMinutes(2L))
-                                    .build();
-                            cp.addreply(crwlReply);
-
-                        }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    crwlPostRepository.save(cp);
-
-                    count = count + 1;
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 }
