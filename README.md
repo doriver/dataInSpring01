@@ -12,3 +12,5 @@ elasticsearch에선 @Transactional 대신 try catch사용
 
 ### Elastic Cloud 연동
 Config클래스( @EnableElasticsearchAuditing ) + dependencies( 'co.elastic.clients:elasticsearch-java:8.17.0' ) + porperites파일
+
+#### DB에 있는 데이터들을 Thymeleaf로 브라우저에서 렌더링 해봄
