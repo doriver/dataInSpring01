@@ -166,39 +166,4 @@ public class CsvFileInsertService {
         }
     }
 
-
-
-
-
-
-
-    public void csvFileToMySQL(String csvPath) {
-        try {
-            Resource resource = resourceLoader.getResource(csvPath);
-
-            try (
-                    Reader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
-                    CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader()) ) {
-                int count = 0;
-                for (CSVRecord record: csvParser) {
-
-                    String writer = record.get("writer");
-                    String title = record.get("title");
-
-                    String _views = record.get("views");
-                    int views = Integer.parseInt(_views);
-                    String _likes = record.get("likes");
-                    int likes = Integer.parseInt(_likes);
-                    String _comments = record.get("comments");
-                    int comments = Integer.parseInt(_comments);
-
-                    String content = record.get("content");
-
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
